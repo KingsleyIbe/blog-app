@@ -20,7 +20,7 @@ gem 'puma', '~> 5.0'
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem 'importmap-rails'
 
-# gem 'tzinfo-data'
+gem 'tzinfo-data'
 
 gem 'rubocop', '>= 1.0', '< 2.0'
 
@@ -68,6 +68,10 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+end
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.5'
 end
 
 group :test do
