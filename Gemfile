@@ -20,7 +20,7 @@ gem 'puma', '~> 5.0'
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem 'importmap-rails'
 
-gem 'tzinfo-data'
+# gem 'tzinfo-data'
 
 gem 'rubocop', '>= 1.0', '< 2.0'
 
