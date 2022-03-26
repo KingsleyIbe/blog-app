@@ -27,23 +27,34 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: database_name_development
+  database: blog_app_development
   pool: 5
   host: localhost
-  username: postgres_user_name
-  password: postgres_password
+  username: postgres
+  password: prudence@1992
 
 test:
   adapter: postgresql
   encoding: unicode
-  database: database_name_test
+  database: blog_app_test
   pool: 5
-  username: postgres_user_name
-  password: postgres_password
+  username: postgres
+  password: prudence@1992
 
 staging:
   url: <%= ENV['DATABASE_URL'] %>
 
+# production:
+#   url: <%= ENV['DATABASE_URL'] %> 
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see Rails configuration guide
+  # https://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
 production:
-  url: <%= ENV['DATABASE_URL'] %> 
-  
+  <<: *default
+  database: blog_app_production
+  username: blog_app
+  password: <%= ENV["BLOG_APP_DATABASE_PASSWORD"] %>
