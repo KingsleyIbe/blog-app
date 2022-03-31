@@ -1,1 +1,26 @@
-<h1>Show posts goes here</h1>
+<section>
+  <div>
+    <div>
+      <h5>Post #<%= "#{@post.id}" %> by <%= @post.author.name %></h5>
+      <p> 
+        <small>Comments: <%= @post.comments_counter || 0 %>, </small>
+        <small> Likes: <%= @post.likes_counter || 0 %></small>
+      </p>
+    </div>
+    <p><%= @post.text %></p>
+  </div>
+  <% if @post.comments != [] %>
+  <div>
+    <ul>
+      <% @post.comments.each do |comment| %>
+        <li>
+          <p><%= comment.author.name %>: <%= comment.text %></p>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
+  <button>
+    <%= link_to 'See all posts', user_posts_path(@post.author) %>
+  </button>
+</section>

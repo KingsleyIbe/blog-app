@@ -1,0 +1,21 @@
+<li>
+  <div>
+    <%= image_tag "#{user.photo}" %>
+  </div>
+  <%= link_to(user) do %>
+    <div>
+      <div>
+          <h2><%= user.name %></h2>
+          <p>Number of posts:<%= user.posts_counter || 0 %></p>
+      </div>
+      <% if current_page?(users_path) || current_page?(root_path)%>
+        <p><%= user.bio[0..150]... %></p>
+      <% end %> 
+      <div>
+        <% if current_page?(users_path) || current_page?(root_path)%>
+          <%= link_to 'View User', user %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</li>
