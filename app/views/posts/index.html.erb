@@ -1,1 +1,27 @@
-<h1>Home page for posts goes here </h1>
+<section>
+  <% if @posts.empty? %>
+    <p>No post for this user</p>
+  <% end %>
+  <div>
+    <%= render "common/user", :user => @posts[0].author %>
+  </div>
+  <ul>
+    <% @posts.each do |post| %>
+      <li>
+        <%= render 'common/post', :post => post %>
+        <% if post.recent_comments != [] %>
+        <div>
+          <ul>
+            <% post.recent_comments.each do |comment| %>
+              <li>
+                <p><%= comment.author.name %>: <%= comment.text %></p>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+  
+</section>

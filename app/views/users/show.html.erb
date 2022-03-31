@@ -1,1 +1,19 @@
-<h1>Show for users goes here</h1>
+<section>
+  <%= render "common/user", :user => @user %>
+  <div>
+    <h5>Bio</h5>
+    <p><%= @user.bio %></p>
+  </div>
+  
+  <div>
+    <ul>
+      <% @user.fetch_recent_posts.each do |post| %>
+          <%= render 'common/post', :post => post %>
+      <% end %>
+    </ul>
+  </div>
+  <div >
+    <button><%= link_to 'See all users', users_path %></button>
+    <button><%= link_to 'See all posts', user_posts_path(@user) %></button>
+  </div>
+</section>
