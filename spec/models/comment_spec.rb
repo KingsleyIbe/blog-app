@@ -1,25 +1,19 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Comment, type: :model do
   describe 'Comment model' do
-    subject { Comment.new(text: 'test post 1', user_id: 1, post_id: 1) }
+    user = User.new(name: 'Tom', photo: 'image1.jpg', bio: 'bio', posts_counter: 0)
+    post = Post.new(title: 'New post', text: 'Good evening', author: user, likes_counter: 0, comments_counter: 0)
+    post.save!
 
-    before { subject.save }
+    comment_creator = User.new(name: 'Jerry', photo: 'Tom.png', bio: 'bio', posts_counter: 0)
+    post.comments.create!(text: 'Hello World', author: comment_creator)
+    post.comments.create!(text: 'This is my second post', author: comment_creator)
 
-    it 'check if comments text matches' do
-      expect(subject.text).to eq('test post 1')
-    end
-
-    it 'checks that after adding the comment counter should not be same' do
-      prev = Post.find(1).comments_counter
-      subject.update_comments_counter
-      expect(Post.find(1).comments_counter).to_not eq(prev)
-    end
-
-    it 'check if it increases the comments' do
-      prev = Post.find(1).comments_counter
-      subject.update_comments_counter
-      expect(Post.find(1).comments_counter).to eq(prev + 1)
+    it 'add some comments' do
+      expect(post.comments.length).to eql(2)
     end
   end
 end

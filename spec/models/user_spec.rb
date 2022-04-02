@@ -1,30 +1,28 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  describe 'User Model' do
-    subject { User.find(1) }
+  describe 'User model' do
+    subject { User.new(name: 'Adaku', photo: 'image1.jpg', bio: 'Software programmer', posts_counter: 0) }
+    before { subject.save }
 
-    it 'checks if subject is invalid if there is no name' do
+    it 'check the name is not blank' do
       subject.name = nil
       expect(subject).to_not be_valid
     end
 
-    it 'tests post counter to be less than 0' do
-      subject.posts_counter = - 5
+    it 'check if posts counter is numeric' do
+      subject.posts_counter = 'not-numeric'
       expect(subject).to_not be_valid
     end
-  end
 
-  describe 'User Model methods' do
-    before do
-      6.times do |number|
-        subject.id = 1
-        Post.create(title: 'title', text: "test post #{number}", user: subject)
-      end
+    it 'check if posts counter is equal or greater than zero' do
+      expect(subject.posts_counter).to be >= 0
     end
 
-    it 'loads only the first three posts' do
-      expect(subject.recent_3_posts.length).to eq(3)
+    it 'shows three recent posts' do
+      expect(subject.fetch_recent_posts).to eq(subject.posts.last(3))
     end
   end
 end
