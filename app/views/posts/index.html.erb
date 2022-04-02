@@ -1,27 +1,27 @@
-<section>
-  <% if @posts.empty? %>
-    <p>No post for this user</p>
-  <% end %>
   <div>
-    <%= render "common/user", :user => @posts[0].author %>
+    <div>
+      <h2><%= @user.name%></h2>
+      <p>Number of posts: <%= @user.posts_counter %></p>
+    </div>
   </div>
-  <ul>
-    <% @posts.each do |post| %>
-      <li>
-        <%= render 'common/post', :post => post %>
-        <% if post.recent_comments != [] %>
-        <div>
-          <ul>
-            <% post.recent_comments.each do |comment| %>
-              <li>
-                <p><%= comment.author.name %>: <%= comment.text %></p>
-              </li>
-            <% end %>
-          </ul>
-        </div>
-        <% end %>
-      </li>
-    <% end %>
-  </ul>
-  
-</section>
+
+<% @posts.each do |post| %>
+  <div>
+    <div>
+     <%= link_to "#{post.title}", user_post_path(@user.id, post.id), class:"anything" %> 
+      <h3><%= post.text%></h3>
+      <p>Number of comments: <%= post.comments_counter %> <span>Number of likes: <%= post.likes_counter %></span></p>
+    </div>
+  </div>
+  <div>
+    <% post.recent_5_comments.each do |comment| %>
+       <h2><%= comment.user.name%>: <%= comment.text%></h2>
+    <%end%>
+  </div>
+<%end%>
+
+<div>
+  <button>
+      Pagination
+  </button>
+</div>
