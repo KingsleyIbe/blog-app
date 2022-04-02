@@ -1,12 +1,14 @@
 class LikesController < ApplicationController
   def create
     @post = Post.find(params[:post_id])
-    @like = current_user.likes.new(post_id: @post.id)
+    new_like = current_user.likes.new(
+      author_id: current_user.id,
+      post_id: @post.id
+    )
     if new_like.save
-      new_like.update_likes_counter
-      redirect_to "/users/#{@post.user_id}/posts/#{@post.id}", notice: 'Success!'
+      redirect_to "/users/#{@post.author_id}/posts/#{@post.id}", flash: { alert: 'Your like is saved' }
     else
-      render :new, alert: 'Error occured!'
+      redirect_to "/users/#{@post.author_id}/posts/#{@post.id}", flash.now[:error] = 'Could not save like'
     end
   end
 end
