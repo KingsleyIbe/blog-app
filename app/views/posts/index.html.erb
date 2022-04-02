@@ -14,8 +14,8 @@
     </div>
   </div>
   <div>
-    <% post.recent_5_comments.each do |comment| %>
-       <h2><%= comment.user.name%>: <%= comment.text%></h2>
+    <% post.recent_comments.each do |comment| %>
+       <h2><%= comment.author.name%>: <%= comment.text%></h2>
     <%end%>
   </div>
 <%end%>

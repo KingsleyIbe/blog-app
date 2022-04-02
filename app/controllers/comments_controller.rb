@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CommentsController < ApplicationController
   def new
     @comment = Comment.new
@@ -11,10 +13,11 @@ class CommentsController < ApplicationController
       post_id: @post.id
     )
     @new_comment.post_id = @post.id
-    if new_comment.save
-      redirect_to "/users/#{@post.author_id}/posts/#{@post.id}", flash: { alert: 'Success!' }
+    if @new_comment.save
+      redirect_to "/users/#{@post.author_id}/posts/#{@post.id}", flash: { alert: 'Comment saved' }
     else
-      render :new, flash.now[:error] = 'Error occured!'
+      flash.now[:error] = 'Could not save comment'
+      render action: 'new'
     end
   end
 
