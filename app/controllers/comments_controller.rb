@@ -4,14 +4,17 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @comment = current_user.comments.new(params)
-    @comment.post_id = params[:post_id]
-
+    @post = Post.find(params[:post_id])
+    @new_comment = current_user.comments.new(
+      text: comment_params,
+      author_id: current_user.id,
+      post_id: @post.id
+    )
+    @new_comment.post_id = @post.id
     if new_comment.save
-      new_comment.update_comments_counter
-      redirect_to "/users/#{@post.user_id}/posts/#{@post.id}", notice: 'Success!'
+      redirect_to "/users/#{@post.author_id}/posts/#{@post.id}", flash: { alert: 'Success!' }
     else
-      render :new, alert: 'Error occured!'
+      render :new, flash.now[:error] = 'Error occured!'
     end
   end
 
