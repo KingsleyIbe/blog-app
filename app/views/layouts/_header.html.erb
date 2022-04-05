@@ -1,7 +1,9 @@
 <header>
   <div>
     <%= link_to "Blog App", root_path, id: "logo" %>
-    <nav>
+    <%
+=begin%>
+ <nav>
       <ul>
         <% if user_signed_in? %>
           <li><%= link_to "Home", root_path %></li>
@@ -10,6 +12,16 @@
           <li><%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "logout"%></li>
         <%end%>
       </ul>
+    </nav> 
+<%
+=end%>
+<nav>
+      <% if current_user %>
+        <%= link_to 'Sign out', destroy_user_session_path, method: :delete %>
+      <% else %> 
+      <%= link_to 'Sign in', user_session_path %>
+      <% end %>
     </nav>
+
   </div>
 </header>
