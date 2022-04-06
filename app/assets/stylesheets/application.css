@@ -24,6 +24,10 @@
    margin: 0;
  }
 
+ .sign-up-container {
+   text-align: center;
+ }
+
  .login-field {
    margin-top: 10px;
    text-align: center;
