@@ -14,25 +14,25 @@
  *= require_self
  */
 
- body {
-   padding: 0;
-   margin: 0;
- }
+body {
+  padding: 0;
+  margin: 0;
+}
 
- .sign-up-container {
-   text-align: center;
- }
+.sign-up-container {
+  text-align: center;
+}
 
- .login-field {
-   margin-top: 10px;
-   text-align: center;
- }
+.login-field {
+  margin-top: 10px;
+  text-align: center;
+}
 
- .login-field-2 {
-   margin-top: 20px;
-   text-align: center;
- }
+.login-field-2 {
+  margin-top: 20px;
+  text-align: center;
+}
 
- .login-input {
-   width: 30%;
- }
+.login-input {
+  width: 30%;
+}
