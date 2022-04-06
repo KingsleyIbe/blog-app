@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "postcss-loader": "^6.2.1",
     "tailwindcss": "^1"
   },
   "devDependencies": {
