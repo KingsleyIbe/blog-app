@@ -51,7 +51,7 @@ button {
   margin: auto;
   gap: 10px;
   position: absolute;
-  left: 60rem;
+  left: 50rem;
 }
 
 .header div nav li button {
@@ -70,10 +70,17 @@ button {
   justify-content: center;
   background-color: #1d1d30;
   border-radius: 10px;
+  width: 50%;
 }
 
 .user-container .user-name {
   color: #9ba5b2;
+  font-size: medium;
+  width: 100%;
+}
+
+.user-container .col p {
+  font-size: small;
 }
 
 .sign-up-container {
