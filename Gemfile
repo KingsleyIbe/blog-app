@@ -45,6 +45,8 @@ gem 'rails-controller-testing'
 
 gem 'devise'
 
+gem 'cancancan'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
