@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  load_and_authorize_resource
   def index
     @user = User.find(params[:user_id])
     @posts = @user.posts.includes(:comments)
@@ -8,6 +9,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     @user = @post.author
     @comments = @post.comments
+    authorize! :read, @post
   end
 
   def new
@@ -28,6 +30,16 @@ class PostsController < ApplicationController
         end
       end
     end
+  end
+
+  def destroy
+    post = Post.find(params[:post_id])
+    post.author.decrement!(:posts_counter)
+    post.destroy
+    flash[:notice] = 'Post was removed successfully!'
+    splitted_path = params[:url].split('/')
+    splitted_path.pop if splitted_path.length == 7 # If the user removed the post while being on its page
+    redirect_to params[:url]
   end
 
   private
