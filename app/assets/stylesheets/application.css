@@ -17,7 +17,24 @@
 body {
   padding: 0;
   margin: 0;
-  background-color: #fff;
+  background-color: #141425;
+  color: #fff;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+button {
+  background-color: #7c3dfc;
+  color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  border-style: none;
 }
 
 .sign-up-container {
@@ -36,4 +53,19 @@ body {
 
 .login-input {
   width: 30%;
+}
+
+.login-input::placeholder {
+  background-color: #1d1d30;
+  color: #0ff;
+}
+
+.notice,
+.alert {
+  /* color: #7c3dfc; */
+  color: #fff;
+}
+
+.placeholder-bg::placeholder {
+  background-color: #1d1d30;
 }
