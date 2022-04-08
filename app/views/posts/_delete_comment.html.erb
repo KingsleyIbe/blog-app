@@ -1,6 +1,13 @@
-<% unless current_user.nil? || cannot?(:destroy, comment) %>
+<%
+=begin%>
+ <% unless current_user.nil? || cannot?(:destroy, comment) %>
   <%= form_with url: '/comments/delete', method: :delete do |form| %>
     <%= form.hidden_field :comment_id, value: comment.id %>
     <%= button_to 'Delete', '#', onclick: 'Rails.fire(this.parentNode, \'submit\')' %>
   <% end %>
-<% end %>
+<% end %> 
+<%
+=end%>
+
+<%= button_to 'Delete Post' , user_post_path(@user, post), method: :delete, data: { confirm: 'Are you sure?' } %>
+

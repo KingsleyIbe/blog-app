@@ -17,6 +17,7 @@
 body {
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
   background-color: #141425;
   color: #fff;
 }
@@ -140,7 +141,6 @@ textarea {
 
 .notice,
 .alert {
-  /* color: #7c3dfc; */
   color: #fff;
 }
 
@@ -158,7 +158,6 @@ textarea {
 }
 
 .all-border {
-  /* border: 1px solid #9ba5b2; */
   background-color: #335;
   border-radius: 10px;
 }

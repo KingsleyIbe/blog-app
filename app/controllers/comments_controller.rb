@@ -6,23 +6,25 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @post = Post.find(params[:post_id])
-    @new_comment = current_user.comments.new(
-      text: comment_params,
-      author_id: current_user.id,
-      post_id: @post.id
-    )
-    @new_comment.post_id = @post.id
-    if @new_comment.save
-      redirect_to "/users/#{@post.author_id}/posts/#{@post.id}", flash: { alert: 'Comment saved' }
-    else
-      flash.now[:error] = 'Could not save comment'
-      render action: 'new'
-    end
+    post = Post.find(params[:post_id])
+    comment = post.comments.create(comment_params)
+    # comment.user_id = current_user.id
+    comment.save
+    flash[:success] = 'Your comment was created'
+    redirect_to root_url
   end
+    # comment = current_user.comments.new(comment_params)
+  #   comment.post = post
+  #   if comment.save!
+  #     flash[:success] = 'Your comment was added'
+  #   else
+  #     flash[:error] = 'Your comment was not added'
+  #   end
+  #   redirect_to user_post_path
+  # end
 
   def destroy
-    @comment = Comment.find(params[:id])
+    @comment = Comment.find(params[:post_id])
     @comment.destroy
     flash[:success] = 'Your comment was deleted'
     redirect_to root_url
@@ -31,6 +33,6 @@ class CommentsController < ApplicationController
   private
 
   def comment_params
-    params.require(:comment).permit(:text)[:text]
+    params.permit(:text)
   end
 end

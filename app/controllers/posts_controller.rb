@@ -14,20 +14,26 @@ class PostsController < ApplicationController
   end
 
   def new
-    @post = Post.new
+    @user = User.find(params[:user_id])
+    @post = @user.posts.new
+    render :new, locals: { post: @post }
   end
 
+  # 
   def create
-    new_post = current_user.posts.new(post_params)
-    new_post.likes_counter = 0
-    new_post.comments_counter = 0
-    new_post.update_posts_counter
+    authorize! :create, @post
+    @user = User.find(params[:user_id])
+    add_post = @user.posts.new(post_params)
+    add_post.comments_counter = 0
+    add_post.likes_counter = 0
     respond_to do |format|
       format.html do
-        if new_post.save
-          redirect_to "/users/#{new_post.user.id}/posts/", flash: { alert: 'Success!' }
+        if add_post.save
+          flash[:success] = 'Post created successfully'
+          redirect_to user_posts_url
         else
-          render :new, flash: { alert: 'Error occured!' }
+          flash.now[:error] = 'Error: Post could not be created'
+          render :new, locals: { post: add_post }
         end
       end
     end
@@ -45,7 +51,10 @@ class PostsController < ApplicationController
 
   private
 
+  # def post_params
+  #   params.require(:data).permit(:title, :text)
+  # end
   def post_params
-    params.require(:data).permit(:title, :text)
+    params.require(:new_post).permit(:title, :text)
   end
 end
