@@ -31,12 +31,20 @@ li {
 }
 
 button,
-.post-btn {
+.post-btn,
+.comment-btn,
+.see-all-post-btn {
   background-color: #7c3dfc;
   color: #fff;
   padding: 10px;
   border-radius: 10px;
   border-style: none;
+}
+
+.post-like-btn {
+  background-color: #7c3dfc;
+  color: #fff;
+  padding: 0;
 }
 
 form {
@@ -153,4 +161,10 @@ textarea {
   /* border: 1px solid #9ba5b2; */
   background-color: #335;
   border-radius: 10px;
+}
+
+.post-see-btns {
+  position: relative;
+  left: 300px;
+  margin-bottom: 10px;
 }

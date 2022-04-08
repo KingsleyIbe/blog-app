@@ -1,12 +1,10 @@
 <section>
-  <div>
-  <div class="user_data_post all-border"> 
+<div class="all-border w-75 mx-auto">
+  <div class="w-50 mx-auto p-5">
+  <div class="user_data_post"> 
       <h2><%= @post.title %> by <span><%= @post.author.name %></span></h2>
-      <%= form_with url: "/posts/#{@post.id}/likes", scope: :like do |form| %>
-        <%= form.submit "Like this post", class: "post-like-btns"%>
-      <% end %>
     </div>
-    <div>
+    <div class="my-3">
       <h5>Post #<%= "#{@post.id}" %> by <%= @post.author.name %></h5>
       <p> 
         <small>Comments: <%= @post.comments_counter || 0 %>, </small>
@@ -26,10 +24,18 @@
     </ul>
   </div>
   <% end %>
+  <div class="post-see-btns ">
   <button>
-    <%= link_to 'See all posts', user_posts_path(@post.author) %>
+    <%= link_to 'See all posts', user_posts_path(@post.author), class: "see-all-post-btn"%>
   </button>
+  <button>
+  <%= form_with url: "/posts/#{@post.id}/likes", scope: :like do |form| %>
+        <%= form.submit "Like this post", class: "post-like-btn"%>
+      <% end %>
+  </button>
+  </div>
   <div>
     <%= render partial: "creation_of_comments", local: { post: @post } %>
   </div>
+</div>
 </section>
