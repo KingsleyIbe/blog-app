@@ -23,18 +23,42 @@ body {
 
 a {
   text-decoration: none;
+  color: #fff;
 }
 
 li {
   list-style: none;
 }
 
-button {
+button,
+.post-btn {
   background-color: #7c3dfc;
   color: #fff;
   padding: 10px;
   border-radius: 10px;
   border-style: none;
+}
+
+form {
+  background-color: #141425;
+  color: #9ba5b2;
+  border-radius: 10px;
+}
+
+input {
+  border-radius: 10px;
+  border: 1px solid #9ba5b2;
+  padding: 10px;
+  background-color: #141425;
+  color: #9ba5b2;
+}
+
+textarea {
+  border-radius: 10px;
+  border: 1px solid #9ba5b2;
+  padding: 10px;
+  background-color: #141425;
+  color: #9ba5b2;
 }
 
 .header {
@@ -103,7 +127,7 @@ button {
 
 .login-input::placeholder {
   background-color: #1d1d30;
-  color: #0ff;
+  color: #b7a1e2;
 }
 
 .notice,
@@ -114,4 +138,19 @@ button {
 
 .placeholder-bg::placeholder {
   background-color: #1d1d30;
+}
+
+.bg-color {
+  background-color: #1d1d30;
+  border-radius: 10px;
+}
+
+.text-color {
+  color: #7c3dfc;
+}
+
+.all-border {
+  /* border: 1px solid #9ba5b2; */
+  background-color: #335;
+  border-radius: 10px;
 }

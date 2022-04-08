@@ -1,6 +1,6 @@
 <section>
   <div>
-  <div class="user_data_post"> 
+  <div class="user_data_post all-border"> 
       <h2><%= @post.title %> by <span><%= @post.author.name %></span></h2>
       <%= form_with url: "/posts/#{@post.id}/likes", scope: :like do |form| %>
         <%= form.submit "Like this post", class: "post-like-btns"%>
