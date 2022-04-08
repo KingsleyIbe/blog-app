@@ -16,4 +16,8 @@ class Post < ApplicationRecord
   def update_posts_counter
     author.increment!(:posts_counter)
   end
+
+  def update_posts_counter_after_destroy
+    user.decrement!(:posts_counter)
+  end
 end
