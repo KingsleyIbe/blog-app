@@ -1,69 +1,78 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe 'On Post Index Page', type: :feature do
-  background do
-    visit user_session_path
+RSpec.describe 'posts#index', type: :feature do
+  describe 'Post' do
+    before(:each) do
+      @user1 = User.create(name: 'Kingsley', photo: 'Tom.png', bio: 'bio', posts_counter: 0, email: 'amy@gmail.com',
+                           password: 'password')
+      visit root_path
+      fill_in 'Email', with: 'amy@gmail.com'
+      fill_in 'Password', with: 'password'
+      click_button 'Log in'
 
-    image = 'https://images.unsplash.com/photo-1648974299612-679d6fb46816?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
-    bio = 'Teacher from Mexico.'
-    @jake = User.create!(name: 'Jake', photo: image, bio:, posts_counter: 0, email: 'jake@mail.com',
-                         password: 'jake123')
-    fill_in 'Email', with: 'jake@mail.com'
-    fill_in 'Password', with: 'jake123'
-    click_button 'Log in'
+      @post1 = Post.create(title: 'First Post', text: 'This is my first post', comments_counter: 0, likes_counter: 0,
+                           author: @user1)
+      @post2 = Post.create(title: 'Second Post', text: 'This is my second post', comments_counter: 0, likes_counter: 0,
+                           author: @user1)
+      @post3 = Post.create(title: 'Third Post', text: 'This is my third post', comments_counter: 0, likes_counter: 0,
+                           author: @user1)
+      @post4 = Post.create(title: 'Fourth Post', text: 'This is my fourth post', comments_counter: 0, likes_counter: 0,
+                           author: @user1)
+      @comment1 = Comment.create(text: 'Good job!', author: User.first,
+                                 post: Post.first)
+      @comment2 = Comment.create(text: 'Keep it up!', author: User.first, post: Post.first)
+      @comment3 = Comment.create(text: 'Congratulations!', author: User.first, post: Post.first)
 
-    @post = @jake.posts.create!(title: 'programmer', text: 'Iam Programmer I have life', likes_counter: 0,
-                                comments_counter: 0)
-    @jake.posts.create!(title: 'Sky', text: 'Why is the sky blue?', likes_counter: 0, comments_counter: 0)
+      visit(user_posts_path(@user1.id))
+    end
 
-    fin = User.create!(name: 'fin', photo: image, bio:, posts_counter: 0, email: 'fin@mail.com',
-                       password: 'fin1234')
-    fin.comments.create!(text: 'hi jake.', post: @post)
-    fin.comments.create!(text: 'hi jake!', post: @post)
-    visit user_posts_path(@jake)
-  end
+    it "shows user's profile picture" do
+      all('img').each do |i|
+        expect(i[:src]).to eq('Tom.png')
+      end
+    end
 
-  it "can see the user's profile picture." do
-    expect(page).to have_content 'programmer'
-  end
+    it 'shows the users username' do
+      expect(page).to have_content('Kingsley')
+    end
 
-  it 'can see the user\'s username.' do
-    expect(page).to have_content 'Jake'
-  end
+    it 'shows number of posts of user has written' do
+      post = Post.all
+      expect(post.size).to eql(4)
+    end
 
-  it 'can see the number of posts the user has written' do
-    expect(page).to have_content 'Comments: 2'
-  end
+    it 'shows number of posts by user' do
+      user = User.first
+      expect(page).to have_content(user.posts_counter)
+    end
 
-  it 'can see a post\'s title.' do
-    expect(page).to have_content 'Likes: 0'
-  end
+    it 'shows posts title' do
+      expect(page).to have_content('First Post')
+    end
 
-  it 'can see some of the post\'s body.' do
-    expect(page).to have_content 'Iam Programmer I have life'
-  end
+    it 'can see some of the post detail' do
+      expect(page).to have_content 'This is my first post'
+    end
 
-  it 'can see the first comments on a post' do
-    expect(page).to have_content 'hi jake'
-  end
+    it 'can see the first comment on a post' do
+      expect(page).to have_content 'Good job!'
+    end
 
-  it 'can see how many comments a post has.' do
-    expect(page).to have_content 'hi jake.'
-    expect(page).to have_content 'hi jake!'
-  end
+    it 'can see how many comments a post has.' do
+      post = Post.first
+      expect(page).to have_content(post.comments_counter)
+    end
 
-  it 'can see how many likes a post has.' do
-    expect(page).to have_content 'hi jake'
-    expect(page).to have_content 'hi jake!'
-  end
+    it 'can see how many likes a post has.' do
+      post = Post.first
+      expect(page).to have_content(post.likes_counter)
+    end
 
-  it 'can see a section for pagination if there are more posts than fit on the view.' do
-    expect(page).to have_content 'hi jake'
-    expect(page).to have_content 'hi jake!'
-  end
-
-  it 'When I click on a post, it redirects me to that post\'s show page.' do
-    expect(page).to have_content 'hi jake'
-    expect(page).to have_content 'hi jake!'
+    it "redirects the user to the post's show page after clickin on it" do
+      click_link 'First Post'
+      expect(page).to have_current_path user_post_path(@post1.author_id, @post1)
+    end
   end
 end

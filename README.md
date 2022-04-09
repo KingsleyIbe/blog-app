@@ -66,6 +66,9 @@ Then run the server:
 
 ``` $ rails s ```
 
+To run test
+``` bundle exec rspec spec/features ```
+
 ## Author
 
 ### 👨🏾‍⚕️ Kingsley Ibe

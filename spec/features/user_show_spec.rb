@@ -1,54 +1,70 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe 'User Show Page', type: :feature do
-  before(:each) do
-    visit user_session_path
-    @photo = 'https://images.unsplash.com/photo-1648974299612-679d6fb46816?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
-    @user_one = User.create(name: 'Jake', photo: @photo, bio: 'Lorem ipsum dolor sit amet', email: 'jake@example.com',
-                            password: 'jake123', posts_counter: 6)
-    fill_in 'Email', with: 'jake@example.com'
-    fill_in 'Password', with: 'jake123'
-    click_button 'Log in'
-    @post1 = @user_one.posts.create!(title: 'Programming',
-                                     text: 'I am a programmer',
-                                     likes_counter: 0,
-                                     comments_counter: 0)
-    @post2 = @user_one.posts.create!(title: 'Skies',
-                                     text: 'Blue skies',
-                                     likes_counter: 0,
-                                     comments_counter: 0)
-    @post3 = @user_one.posts.create!(title: 'One more time',
-                                     text: 'I want to see the world again',
-                                     likes_counter: 0,
-                                     comments_counter: 6)
-    visit user_path(@user_one)
-  end
+RSpec.describe 'user#Show', type: :feature do
+  describe 'User' do
+    before(:each) do
+      @user1 = User.create(name: 'Amy', photo: 'image1.jpg', bio: 'bio', posts_counter: 0, email: 'amy@gmail.com',
+                           password: 'password')
+      @user2 = User.create(name: 'Amy', bio: 'bio',
+                           photo: 'image1.jpg',
+                           email: 'amy@gmail.com', password: 'password')
+      @user3 = User.create(name: 'Jerry', bio: 'bio',
+                           photo: 'image1.jpg',
+                           email: 'jerry@gmail.com', password: 'password')
 
-  it 'Should see the user\'s profile picture' do
-    image_src = page.find('img')['src']
-    expect(image_src).to eql @photo
-  end
+      visit root_path
+      fill_in 'Email', with: 'amy@gmail.com'
+      fill_in 'Password', with: 'password'
+      click_button 'Log in'
+      @post1 = Post.create(title: 'First Post', text: 'This is my first post', comments_counter: 0, likes_counter: 0,
+                           author: @user1)
+      @post2 = Post.create(title: 'Second Post', text: 'This is my second post', comments_counter: 0, likes_counter: 0,
+                           author: @user1)
+      @post3 = Post.create(title: 'Third Post', text: 'This is my third post', comments_counter: 0, likes_counter: 0,
+                           author: @user1)
+      @post4 = Post.create(title: 'Fourth Post', text: 'This is my fourth post', comments_counter: 0, likes_counter: 0,
+                           author: @user1)
+      visit user_path(@user1.id)
+    end
+    it "show user's profile picture" do
+      all('img').each do |i|
+        expect(i[:src]).to eq('/assets/image1-f893171ac7386418fbe290a681d9c12a7fecc5946afd70dccdb96626edfc7694.jpg')
+      end
+    end
 
-  it 'Should see the user\'s username' do
-    expect(page).to have_content 'Jake'
-  end
+    it "show user's name" do
+      expect(page).to have_content 'Amy'
+    end
 
-  it 'Should see the number of posts the user has written' do
-    expect(page).to have_content 'Number of posts: '
-  end
+    it 'show number of posts per user' do
+      user = User.first
+      expect(page).to have_content(user.posts_counter)
+    end
 
-  it 'Should see the user\'s bio' do
-    expect(page).to have_content 'Lorem ipsum dolor sit amet'
-  end
+    it "show user's bio." do
+      expect(page).to have_content('bio')
+    end
 
-  it 'Should see the user\'s first 3 posts.' do
-    expect(page).to have_content 'I am a programmer'
-    expect(page).to have_content 'Blue skies'
-    expect(page).to have_content 'I want to see the world again'
-  end
+    it "show user's first 3 posts." do
+      expect(page).to have_content 'This is my fourth post'
+      expect(page).to have_content 'This is my third post'
+      expect(page).to have_content 'This is my second post'
+    end
 
-  it 'When I click to see all posts, it redirects me to the user\'s post\'s index page.' do
-    click_link 'See all posts'
-    expect(page).to have_current_path user_posts_path(@user_one)
+    it "show button that lets me view all of a user's posts." do
+      expect(page).to have_link('See all posts')
+    end
+
+    it "click post and redirect to that post's show page." do
+      click_link 'See all posts'
+      expect(page).to have_current_path user_posts_path(@user1)
+    end
+
+    it "click see all posts and redirects to user's post's index page." do
+      click_link 'See all posts'
+      expect(page).to have_current_path user_posts_path(@user1)
+    end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -34,7 +36,7 @@ gem 'jbuilder'
 # gem "kredis"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-# gem "bcrypt", "~> 3.1.7"
+gem 'bcrypt', '~> 3.1.7'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data'
@@ -43,12 +45,16 @@ gem 'ffi'
 
 gem 'rails-controller-testing'
 
-gem 'devise'
-
-gem 'cancancan'
-
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
+
+# Add devise gem for authentication
+
+gem 'devise'
+
+# Add cancancan for authorization
+
+gem 'cancancan', '~> 3.3'
 
 # Use Sass to process CSS
 # gem "sassc-rails"
@@ -58,13 +64,12 @@ gem 'bootsnap', require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem 'database_cleaner'
   gem 'debug', platforms: %i[mri mingw x64_mingw]
-  # gem 'rails-controller-testing'
-end
 
-group :development, :test do
-  ## rspec tests
+  # Database clearner
+  gem 'database_cleaner'
+
+  # rspec tests
   gem 'rspec-rails', '~> 5.0.0'
 end
 

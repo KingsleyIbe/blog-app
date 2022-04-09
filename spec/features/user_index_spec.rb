@@ -1,37 +1,44 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe 'User Index Page', type: :feature do
-  before(:each) do
-    visit user_session_path
-    @photo = 'https://images.unsplash.com/photo-1648974299612-679d6fb46816?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
-    @user_one = User.create(name: 'Jake',
-                            photo: @photo, email: 'jake@example.com', password: 'jake123', posts_counter: 1)
-    @user_two = User.create(name: 'Pablo',
-                            photo: @photo, email: 'pablo@example.com', password: 'pablo123', posts_counter: 0)
-    @user_three = User.create(name: 'Lucy',
-                              photo: @photo, email: 'lucy@example.com', password: 'lucy123', posts_counter: 8)
-    fill_in 'Email', with: 'jake@example.com'
-    fill_in 'Password', with: 'jake123'
-    click_button 'Log in'
-    visit users_path
-  end
+RSpec.describe 'users#index', type: :feature do
+  describe 'User' do
+    before(:each) do
+      @user1 = User.create(name: 'Amy', photo: 'image1.jpg', bio: 'bio', posts_counter: 0, email: 'amy@gmail.com',
+                           password: 'password')
+      @user2 = User.create(name: 'Amy', bio: 'bio',
+                           photo: 'image1.jpg',
+                           email: 'amy@gmail.com', password: 'password')
+      @user3 = User.create(name: 'Jerry', bio: 'bio',
+                           photo: 'image1.jpg',
+                           email: 'jerry@gmail.com', password: 'password')
+      visit root_path
+      fill_in 'Email', with: 'amy@gmail.com'
+      fill_in 'Password', with: 'password'
+      click_button 'Log in'
+    end
 
-  it 'should see the username of all other users.' do
-    expect(page).to have_content('Jake')
-    expect(page).to have_content('Pablo')
-    expect(page).to have_content('Lucy')
-  end
+    it 'Shows the username' do
+      expect(page).to have_content('Amy')
+    end
 
-  it 'Should see the profile picture for each user.' do
-    images = page.all('img')
-    user_names = page.all('div h2')
-    expect(images.size).to eql(user_names.size)
-  end
+    it "Shows the user's photo" do
+      all('img').each do |i|
+        expect(i[:src]).to eq('/assets/image1-f893171ac7386418fbe290a681d9c12a7fecc5946afd70dccdb96626edfc7694.jpg')
+      end
+    end
 
-  it 'Should see the number of posts each user has written.' do
-    subscribers = page.all('.card')
-    expect(subscribers[0]).to have_content 'Number of posts: 1'
-    expect(subscribers[1]).to have_content 'Number of posts: 0'
-    expect(subscribers[2]).to have_content 'Number of posts: 8'
+    it 'Shows the number of posts' do
+      all(:css, '.num_post').each do |post|
+        expect(post).to have_content('Number of posts: 0')
+      end
+    end
+
+    it "after clicking on the user, it will be redirected to that user's show page" do
+      expect(page).to have_content('Number of posts: 0')
+      click_on 'Amy'
+      expect(page).to have_no_content('Jerry')
+    end
   end
 end
