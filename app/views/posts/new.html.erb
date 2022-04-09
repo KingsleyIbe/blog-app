@@ -1,13 +1,18 @@
-<h1>Create a post</h1>
-<%= form_with url: user_posts_path, scope: :data do |form| %>
-<div>
-	<section>
-		<%= form.label :title, "Title", class: "label" %>
-		<%= form.text_field :title, placeholder: "Title", required: true %>
-	</section>
-	<section>
-		<%= form.text_area :text, placeholder: "Type here...", rows: 14, required: true %>
-	</section>
-	<%= form.submit "Post", class: "submit-btn" %>
+<div class="bg-color p-5 mx-auto w-50">
+  <h1 class="text-center text-color">Create a post</h1>
+  <%= form_with url: users_path, scope: :data do |form| %>
+  <div class="w-100 p-4">
+	  <section>
+		  <%= form.text_field :title, placeholder: "Title", required: true, class: "w-100 my-3" %>
+	  </section>
+	  <section>
+		  <%= form.text_area :text, placeholder: "Type here...", rows: 14, required: true, class: "w-100" %>
+	  </section>
+	  <div class="mx-auto w-25">
+		  <button>
+	      <%= form.submit "Post", class: "post-btn" %>
+			</button>
+	  </div>
   </div>
 <% end %>
+</div>

@@ -1,11 +1,12 @@
 <section>
+<div class="p-5 mx-auto bg-color w-25">
   <%= render "common/user", :user => @user %>
-  <div>
+  <div class="all-border p-2">
     <h5>Bio</h5>
     <p><%= @user.bio %></p>
   </div>
   
-  <div>
+  <div class="all-border p-2 my-2">
     <ul>
       <% @user.fetch_recent_posts.each do |post| %>
           <%= render 'common/post', :post => post %>
@@ -14,6 +15,7 @@
   </div>
   <div >
     <button><%= link_to 'See all users', users_path %></button>
-    <button><%= link_to 'See all posts', user_posts_path(@user) %></button>
+    <button><%= link_to 'See all posts', user_posts_path(@user.id) %></button>
+  </div>
   </div>
 </section>

@@ -1,13 +1,15 @@
+<div class="user-container">
 <% @users.each do |user| %>
-  <div>
-    <div>
-      <%= image_tag("image1.jpg", width:'100vw', height:'100%') %>
-    </div>
-    <div>
-      <%= link_to user_path(user.id) do %>
-      <h2><%= user.name%></h2>
-      <% end %>
-      <p>Number of posts: <%= user.posts_counter %></p>
-    </div>
+  <div class="user">
+      <div>
+        <%= image_tag("image1.jpg", width:'100vw', height:'100%') %>
+      </div>
+      <div class="col">
+        <%= link_to user_path(user.id) do %>
+        <h2 class="user-name"><%= user.name%></h2>
+        <% end %>
+        <p>Number of posts: <%= user.posts_counter %></p>
+      </div>
   </div>
 <%end%>
+</div>
