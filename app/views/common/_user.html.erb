@@ -2,7 +2,7 @@
   <div>
     <%= image_tag "#{user.photo}", width:'100vw', height:'100%', class: "all-border mx-auto w-100"%>
   </div>
-  <%= link_to user.name, "/users/#{user.id}" %>
+  <%= link_to(user) do %>
     <div>
       <div class="all-border p-2 my-2">
           <h2><%= user.name %></h2>
@@ -17,4 +17,5 @@
         <% end %>
       </div>
     </div>
+  <% end %>
 </li>

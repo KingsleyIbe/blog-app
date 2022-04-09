@@ -1,17 +1,28 @@
+# Rails.application.routes.draw do
+#   devise_for :users
+
+#   root to: "users#index"
+#   resources :users, only: [:index, :show] do
+#     resources :posts, only: [:index, :show, :new, :create, :destroy] do
+#       post "new_comment", to: "comments#create", on: :member
+#       post "like_post", to: "likes#create", on: :member
+#       post "like_post", to: "likes#create", on: :member
+#     end
+#   end
+
+#   resources :comments, only: [:destroy]
+# end
+
 Rails.application.routes.draw do
   devise_for :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-  get '/users/:user_id/posts', to: 'posts#index'
-  get '/users/:user_id/posts/new', to: 'posts#new'
-  post '/posts/create', to: 'posts#create'
-  get '/users/:user_id/posts/:id', to: 'posts#show'
-  post '/users/:user_id/posts/:id/like', to: 'likes#create'
-  post '/users/:user_id/posts/:id/create_comment', to: 'comments#create'
-  delete '/comments/delete', to: 'comments#destroy'
-  delete '/users/:user_id/posts/:id/delete', to: 'posts#destroy'
-  get '/users', to: 'users#index'
-  get '/users/:id', to: 'users#show'
-  # Defines the root path route ("/")
-  root 'users#index'
-end
+  root to: "users#index"
+  resources :users, only: [:index, :show] do
+    resources :posts, only: [:index, :show, :new, :create, :destroy] do
+      post "new_comment", to: "comments#create", on: :member
+      post "like_post", to: "likes#create", on: :member
+      post "like_post", to: "likes#create", on: :member
+    end
+  end
 
+  resources :comments, only: [:destroy]
+end

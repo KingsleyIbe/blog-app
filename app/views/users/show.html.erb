@@ -5,16 +5,7 @@
     <h5>Bio</h5>
     <p><%= @user.bio %></p>
   </div>
-  <% if @user == current_user %>
-    <%= form_with model: Post.new, url: '/posts/create' do |form| %>
-      <%= form.hidden_field :author_id, value: @user.id %>
-      <%= form.text_field :title, placeholder: 'Title' %>
-      <br>
-      <%= form.text_area :text, placeholder: 'Text' %>
-      <br>
-      <%= form.submit %>
-    <% end %>
-  <% end %>
+  
   <div class="all-border p-2 my-2">
     <ul>
       <% @user.fetch_recent_posts.each do |post| %>
@@ -24,12 +15,10 @@
   </div>
   <div >
     <button><%= link_to 'See all users', users_path %></button>
-    <button><%= link_to 'See all posts', "/user_posts#{@user}" %></button>
-    <%
-=begin%>
- <%= button_to 'Delete Post' , "/posts#{@user}", method: :delete, data: { confirm: 'Are you sure?' } %> 
-<%
-=end%>
+    <button><%= link_to 'See all posts', user_posts_path(@user.id) %></button>
+    <% if can? :destroy, post %>
+    <%= button_to 'Delete Post' , user_post_path(@user, post), method: :delete, data: { confirm: 'Are you sure?' } %>
+    <% end %>
   </div>
   </div>
 </section>

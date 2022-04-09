@@ -7,18 +7,18 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find(params[:id])
-    @user = @post.author
-    @comments = @post.comments
+    @post = User.find(params[:user_id]).posts.includes(:comments).find(params[:id])
     authorize! :read, @post
   end
 
   def new
     @user = User.find(params[:user_id])
+    @post = @user.posts.new
+    render :new, locals: { post: @post }
   end
 
   def create
-    # authorize! :create, @post
+    authorize! :create, @post
     add_post = Post.new(post_params)
     add_post.comments_counter = 0
     add_post.likes_counter = 0
@@ -26,10 +26,10 @@ class PostsController < ApplicationController
       format.html do
         if add_post.save
           flash[:success] = 'Post created successfully'
-          format.html { redirect_to "#{users_path}/#{current_user.id}" }
+          redirect_to user_posts_url
         else
           flash.now[:error] = 'Error: Post could not be created'
-          # render :new, locals: { post: add_post }
+          render :new, locals: { post: add_post }
           redirect_to request.path
         end
       end
