@@ -1,6 +1,8 @@
 <div class="bg-color p-5 mx-auto w-50">
   <h1 class="text-center text-color">Create a post</h1>
-  <%= form_with url: users_path, scope: :data do |form| %>
+  <%
+=begin%>
+ <%= form_with url: users_path, scope: :data do |form| %>
   <div class="w-100 p-4">
 	  <section>
 		  <%= form.text_field :title, placeholder: "Title", required: true, class: "w-100 my-3" %>
@@ -14,5 +16,15 @@
 			</button>
 	  </div>
   </div>
-<% end %>
+<% end %> 
+<%
+=end%>
+  <%= form_with model: Post.new, url: '/posts/create' do |form| %>
+    <%= form.hidden_field :author_id, value: @user.id %>
+    <%= form.text_field :title, placeholder: 'Title' %>
+    <br>
+    <%= form.text_area :text, placeholder: 'Text' %>
+    <br>
+    <%= form.submit %>
+  <% end %>
 </div>
