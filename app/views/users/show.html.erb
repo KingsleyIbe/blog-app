@@ -16,9 +16,6 @@
   <div >
     <button><%= link_to 'See all users', users_path %></button>
     <button><%= link_to 'See all posts', user_posts_path(@user.id) %></button>
-    <% if can? :destroy, post %>
-    <%= button_to 'Delete Post' , user_post_path(@user, post), method: :delete, data: { confirm: 'Are you sure?' } %>
-    <% end %>
   </div>
   </div>
 </section>

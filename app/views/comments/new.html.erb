@@ -1,4 +1,6 @@
-<h1>Add Comment</h1>
+<%
+=begin%>
+ <h1>Add Comment</h1>
 <%= form_with model: @post, url: user_posts_path, method: :post, local: true, scope: :new_post, class: "form" do |form| %>
   <div class="mb-3">
     <%= form.label :post_title %>
@@ -11,4 +13,6 @@
   <div class="mb-3">
     <%= form.submit class: "btn btn-primary" %>
   </div>
-<% end %>
+<% end %> 
+<%
+=end%>

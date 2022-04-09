@@ -18,21 +18,13 @@ class PostsController < ApplicationController
   end
 
   def create
-    authorize! :create, @post
-    add_post = Post.new(post_params)
-    add_post.comments_counter = 0
-    add_post.likes_counter = 0
-    respond_to do |format|
-      format.html do
-        if add_post.save
-          flash[:success] = 'Post created successfully'
-          redirect_to user_posts_url
-        else
-          flash.now[:error] = 'Error: Post could not be created'
-          render :new, locals: { post: add_post }
-          redirect_to request.path
-        end
-      end
+    @user = User.find(params[:user_id])
+    @post = @user.posts.new(post_params)
+    if @post.save
+      flash[:success] = 'Post created successfully'
+      redirect_to user_posts_url
+    else
+      render :new, locals: { post: @post }
     end
   end
 
@@ -43,14 +35,11 @@ class PostsController < ApplicationController
     authorize! :read, @post
 
     flash[:success] = 'Post deleted successfully'
-    redirect_to root_url
+    redirect_to user_posts_url
   end
 
   private
 
-  # def post_params
-  #   params.require(:data).permit(:title, :text)
-  # end
   def post_params
     params.require(:post).permit(:author_id, :title, :text)
   end

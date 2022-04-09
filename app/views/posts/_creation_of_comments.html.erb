@@ -1,5 +1,5 @@
 <div class="p-5 w-75 mx-auto bg-color">
-<%= form_with url: "/posts/#{@post.id}/comments", scope: :comment do |form| %>
+<%= form_with url: new_comment_user_post_path, scope: :comment do |form| %>
 <div class="p-5">
 	<%= form.text_area :text, placeholder: "Type something here...", rows: 14, required: true, class: "w-100" %>
   </div>

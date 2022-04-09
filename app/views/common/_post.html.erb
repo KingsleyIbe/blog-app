@@ -7,6 +7,9 @@
       <small>Comments: <%= post.comments_counter || 0 %>, </small>
       <small> Likes: <%= post.likes_counter || 0 %></small>
     </p>
+    <% if can? :destroy, post %>
+      <%= button_to 'Delete Post' , user_post_path(@user, post), method: :delete, data: { confirm: 'Are you sure?' } %>
+    <% end %>
   </li>
 <% end %>
 </div>
