@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'post index page', js: true, type: :feature do
+RSpec.describe 'On Post Index Page', type: :feature do
   background do
     visit user_session_path
 
