@@ -6,7 +6,7 @@ RSpec.feature 'post index page', js: true, type: :feature do
 
     image = 'https://images.unsplash.com/photo-1648974299612-679d6fb46816?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
     bio = 'Teacher from Mexico.'
-    @jake = User.create!(name: 'Jake', photo: image, bio: bio, posts_counter: 0, email: 'jake@mail.com',
+    @jake = User.create!(name: 'Jake', photo: image, bio:, posts_counter: 0, email: 'jake@mail.com',
                          password: 'jake123')
     fill_in 'Email', with: 'jake@mail.com'
     fill_in 'Password', with: 'jake123'
@@ -15,10 +15,10 @@ RSpec.feature 'post index page', js: true, type: :feature do
     post = @jake.posts.create!(title: 'programmer', text: 'Iam Programmer I have life', likes_counter: 0,
                                comments_counter: 0)
 
-    lucy = User.create!(name: 'Lucy', photo: image, bio: bio, posts_counter: 0, email: 'lucy@mail.com',
+    lucy = User.create!(name: 'Lucy', photo: image, bio:, posts_counter: 0, email: 'lucy@mail.com',
                         password: 'r89eudhbgvb')
-    lucy.comments.create!(text: 'haha.', post: post)
-    lucy.comments.create!(text: 'hola', post: post)
+    lucy.comments.create!(text: 'haha.', post:)
+    lucy.comments.create!(text: 'hola', post:)
     visit user_post_path(@jake, post)
   end
 
